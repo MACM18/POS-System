@@ -98,6 +98,22 @@ return [
             'sslmode' => 'prefer',
         ],
 
+        // Tenant database connection (dynamically configured)
+        'tenant' => [
+            'driver' => 'pgsql',
+            'url' => env('DB_URL'),
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'port' => env('DB_PORT', '5432'),
+            'database' => null, // Set dynamically by TenantManager
+            'username' => env('DB_USERNAME', 'root'),
+            'password' => env('DB_PASSWORD', ''),
+            'charset' => env('DB_CHARSET', 'utf8'),
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'search_path' => 'public',
+            'sslmode' => 'prefer',
+        ],
+
         'sqlsrv' => [
             'driver' => 'sqlsrv',
             'url' => env('DB_URL'),
@@ -133,6 +149,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Tenant Database Prefix
+    |--------------------------------------------------------------------------
+    |
+    | This prefix is used when creating tenant databases. Each tenant will
+    | have their database named as: {prefix}{tenant_slug}
+    |
+    */
+
+    'tenant_prefix' => env('TENANT_DB_PREFIX', 'tenant_'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Redis Databases
     |--------------------------------------------------------------------------
     |
@@ -148,7 +176,7 @@ return [
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix' => env('REDIS_PREFIX', Str::slug((string) env('APP_NAME', 'laravel')).'-database-'),
+            'prefix' => env('REDIS_PREFIX', Str::slug((string) env('APP_NAME', 'laravel')) . '-database-'),
             'persistent' => env('REDIS_PERSISTENT', false),
         ],
 
