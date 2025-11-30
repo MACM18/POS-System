@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 env:
-  PHP_VERSION: "8.2"
+  PHP_VERSION: "8.5"
   POSTGRES_DB: pos_test
   POSTGRES_USER: pos_user
   POSTGRES_PASSWORD: testing
@@ -51,11 +51,11 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
           restore-keys: ${{ runner.os }}-composer-
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress
+        run: composer update --prefer-dist --no-progress --no-interaction
 
       - name: Copy environment file
         run: cp .env.testing .env
@@ -98,7 +98,7 @@ jobs:
           extensions: mbstring, xml
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress
+        run: composer update --prefer-dist --no-progress --no-interaction
 
       - name: Run Pint (Laravel code style)
         run: ./vendor/bin/pint --test
@@ -117,7 +117,7 @@ jobs:
           php-version: ${{ env.PHP_VERSION }}
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress
+        run: composer update --prefer-dist --no-progress --no-interaction
 
       - name: Check for vulnerabilities
         run: composer audit
