@@ -53,7 +53,7 @@ class ProductFactory extends Factory
      */
     public function inactive(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'is_active' => false,
         ]);
     }
@@ -63,7 +63,7 @@ class ProductFactory extends Factory
      */
     public function lowStock(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'stock_quantity' => 5,
             'low_stock_threshold' => 10,
         ]);
@@ -74,7 +74,7 @@ class ProductFactory extends Factory
      */
     public function outOfStock(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'stock_quantity' => 0,
         ]);
     }
@@ -84,7 +84,7 @@ class ProductFactory extends Factory
      */
     public function inCategory(Category $category): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'category_id' => $category->id,
         ]);
     }
@@ -94,7 +94,7 @@ class ProductFactory extends Factory
      */
     public function noInventoryTracking(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'track_inventory' => false,
         ]);
     }

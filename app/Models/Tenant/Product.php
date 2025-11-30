@@ -111,7 +111,7 @@ class Product extends TenantModel
      */
     public function hasStock(int $quantity): bool
     {
-        if (!$this->track_inventory) {
+        if (! $this->track_inventory) {
             return true;
         }
 
@@ -123,15 +123,16 @@ class Product extends TenantModel
      */
     public function decrementStock(int $quantity): bool
     {
-        if (!$this->track_inventory) {
+        if (! $this->track_inventory) {
             return true;
         }
 
-        if (!$this->hasStock($quantity)) {
+        if (! $this->hasStock($quantity)) {
             return false;
         }
 
         $this->decrement('stock_quantity', $quantity);
+
         return true;
     }
 

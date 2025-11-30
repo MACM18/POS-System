@@ -16,8 +16,8 @@ class CustomerController extends Controller
     public function index(Request $request): JsonResponse
     {
         $query = Customer::query()
-            ->when($request->search, fn($q, $search) => $q->search($search))
-            ->when($request->boolean('active_only'), fn($q) => $q->active())
+            ->when($request->search, fn ($q, $search) => $q->search($search))
+            ->when($request->boolean('active_only'), fn ($q) => $q->active())
             ->orderBy($request->sort_by ?? 'name', $request->sort_dir ?? 'asc');
 
         if ($request->boolean('paginate', true)) {
@@ -70,7 +70,7 @@ class CustomerController extends Controller
     {
         $customer = Customer::with('sales')->find($id);
 
-        if (!$customer) {
+        if (! $customer) {
             return response()->json([
                 'message' => 'Customer not found',
             ], 404);
@@ -86,7 +86,7 @@ class CustomerController extends Controller
     {
         $customer = Customer::find($id);
 
-        if (!$customer) {
+        if (! $customer) {
             return response()->json([
                 'message' => 'Customer not found',
             ], 404);
@@ -94,7 +94,7 @@ class CustomerController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'sometimes|string|max:255',
-            'email' => 'nullable|email|unique:tenant.customers,email,' . $id,
+            'email' => 'nullable|email|unique:tenant.customers,email,'.$id,
             'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string',
             'city' => 'nullable|string|max:100',
@@ -128,7 +128,7 @@ class CustomerController extends Controller
     {
         $customer = Customer::find($id);
 
-        if (!$customer) {
+        if (! $customer) {
             return response()->json([
                 'message' => 'Customer not found',
             ], 404);
@@ -137,6 +137,7 @@ class CustomerController extends Controller
         // Check if customer has sales
         if ($customer->sales()->exists()) {
             $customer->delete(); // Soft delete
+
             return response()->json([
                 'message' => 'Customer archived successfully (has sales history)',
             ]);
@@ -156,7 +157,7 @@ class CustomerController extends Controller
     {
         $customer = Customer::find($id);
 
-        if (!$customer) {
+        if (! $customer) {
             return response()->json([
                 'message' => 'Customer not found',
             ], 404);

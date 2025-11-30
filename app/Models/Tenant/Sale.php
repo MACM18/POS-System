@@ -50,17 +50,24 @@ class Sale extends TenantModel
      * Status constants.
      */
     public const STATUS_PENDING = 'pending';
+
     public const STATUS_COMPLETED = 'completed';
+
     public const STATUS_CANCELLED = 'cancelled';
+
     public const STATUS_REFUNDED = 'refunded';
 
     /**
      * Payment method constants.
      */
     public const PAYMENT_CASH = 'cash';
+
     public const PAYMENT_CARD = 'card';
+
     public const PAYMENT_MOBILE = 'mobile';
+
     public const PAYMENT_CREDIT = 'credit';
+
     public const PAYMENT_MIXED = 'mixed';
 
     /**
@@ -86,7 +93,7 @@ class Sale extends TenantModel
         $date = now()->format('Ymd');
         $random = strtoupper(Str::random(4));
 
-        return $prefix . $date . '-' . $random;
+        return $prefix.$date.'-'.$random;
     }
 
     /**
@@ -161,7 +168,7 @@ class Sale extends TenantModel
      */
     public function cancel(): bool
     {
-        if (!$this->canBeCancelled()) {
+        if (! $this->canBeCancelled()) {
             return false;
         }
 

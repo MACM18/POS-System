@@ -20,15 +20,15 @@ class SaleController extends Controller
     public function index(Request $request): JsonResponse
     {
         $query = Sale::query()
-            ->when($request->status, fn($q, $status) => $q->where('status', $status))
-            ->when($request->payment_method, fn($q, $method) => $q->paymentMethod($method))
-            ->when($request->customer_id, fn($q, $customerId) => $q->where('customer_id', $customerId))
-            ->when($request->user_id, fn($q, $userId) => $q->where('user_id', $userId))
+            ->when($request->status, fn ($q, $status) => $q->where('status', $status))
+            ->when($request->payment_method, fn ($q, $method) => $q->paymentMethod($method))
+            ->when($request->customer_id, fn ($q, $customerId) => $q->where('customer_id', $customerId))
+            ->when($request->user_id, fn ($q, $userId) => $q->where('user_id', $userId))
             ->when(
                 $request->start_date && $request->end_date,
-                fn($q) => $q->dateRange($request->start_date, $request->end_date)
+                fn ($q) => $q->dateRange($request->start_date, $request->end_date)
             )
-            ->when($request->boolean('today'), fn($q) => $q->today())
+            ->when($request->boolean('today'), fn ($q) => $q->today())
             ->with(['customer', 'user', 'items.product'])
             ->orderBy($request->sort_by ?? 'created_at', $request->sort_dir ?? 'desc');
 
@@ -70,12 +70,12 @@ class SaleController extends Controller
         // Validate stock availability
         foreach ($request->items as $item) {
             $product = Product::find($item['product_id']);
-            if (!$product) {
+            if (! $product) {
                 return response()->json([
                     'message' => "Product {$item['product_id']} not found",
                 ], 404);
             }
-            if (!$product->hasStock($item['quantity'])) {
+            if (! $product->hasStock($item['quantity'])) {
                 return response()->json([
                     'message' => "Insufficient stock for {$product->name}",
                     'available' => $product->stock_quantity,
@@ -171,7 +171,7 @@ class SaleController extends Controller
     {
         $sale = Sale::with(['customer', 'user', 'items.product'])->find($id);
 
-        if (!$sale) {
+        if (! $sale) {
             return response()->json([
                 'message' => 'Sale not found',
             ], 404);
@@ -187,13 +187,13 @@ class SaleController extends Controller
     {
         $sale = Sale::with('items.product')->find($id);
 
-        if (!$sale) {
+        if (! $sale) {
             return response()->json([
                 'message' => 'Sale not found',
             ], 404);
         }
 
-        if (!$sale->canBeCancelled()) {
+        if (! $sale->canBeCancelled()) {
             return response()->json([
                 'message' => 'Sale cannot be cancelled',
                 'status' => $sale->status,

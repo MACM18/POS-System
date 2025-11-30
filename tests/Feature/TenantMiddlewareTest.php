@@ -14,6 +14,7 @@ class TenantMiddlewareTest extends TestCase
     use RefreshDatabase;
 
     protected TenantMiddleware $middleware;
+
     protected TenantManager $tenantManager;
 
     protected function setUp(): void
@@ -27,7 +28,7 @@ class TenantMiddlewareTest extends TestCase
     {
         $request = Request::create('/api/test', 'GET');
 
-        $response = $this->middleware->handle($request, fn() => response('OK'));
+        $response = $this->middleware->handle($request, fn () => response('OK'));
 
         $this->assertEquals(404, $response->getStatusCode());
         $this->assertStringContainsString('Tenant not found', $response->getContent());
@@ -42,7 +43,7 @@ class TenantMiddlewareTest extends TestCase
         $request = Request::create('/api/test', 'GET');
         $request->headers->set('X-Tenant-ID', $tenant->id);
 
-        $response = $this->middleware->handle($request, fn() => response('OK'));
+        $response = $this->middleware->handle($request, fn () => response('OK'));
 
         $this->assertEquals(403, $response->getStatusCode());
         $this->assertStringContainsString('not active', $response->getContent());
@@ -55,7 +56,7 @@ class TenantMiddlewareTest extends TestCase
         $request = Request::create('/api/test', 'GET');
         $request->headers->set('X-Tenant-ID', $tenant->id);
 
-        $response = $this->middleware->handle($request, fn($req) => response('OK'));
+        $response = $this->middleware->handle($request, fn ($req) => response('OK'));
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals('OK', $response->getContent());
@@ -70,6 +71,7 @@ class TenantMiddlewareTest extends TestCase
 
         $this->middleware->handle($request, function ($req) use ($tenant) {
             $this->assertEquals($tenant->id, $req->attributes->get('tenant')->id);
+
             return response('OK');
         });
     }
@@ -81,7 +83,7 @@ class TenantMiddlewareTest extends TestCase
         $request = Request::create('/api/test', 'GET');
         $request->headers->set('X-Tenant-ID', $tenant->id);
 
-        $this->middleware->handle($request, fn() => response('OK'));
+        $this->middleware->handle($request, fn () => response('OK'));
 
         $this->assertTrue($this->tenantManager->hasTenant());
         $this->assertEquals($tenant->id, $this->tenantManager->current()->id);
@@ -97,6 +99,7 @@ class TenantMiddlewareTest extends TestCase
 
         $this->middleware->handle($request, function ($req) use ($tenant) {
             $this->assertEquals($tenant->id, $req->attributes->get('tenant')->id);
+
             return response('OK');
         });
     }

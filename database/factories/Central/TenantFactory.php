@@ -24,13 +24,13 @@ class TenantFactory extends Factory
     public function definition(): array
     {
         $name = fake()->company();
-        $slug = Str::slug($name) . '-' . Str::random(5);
+        $slug = Str::slug($name).'-'.Str::random(5);
 
         return [
             'name' => $name,
             'slug' => $slug,
-            'domain' => $slug . '.posapp.com',
-            'database' => config('database.tenant_prefix', 'tenant_') . $slug,
+            'domain' => $slug.'.posapp.com',
+            'database' => config('database.tenant_prefix', 'tenant_').$slug,
             'email' => fake()->unique()->companyEmail(),
             'status' => Tenant::STATUS_PENDING,
             'plan' => Tenant::PLAN_FREE,
@@ -49,7 +49,7 @@ class TenantFactory extends Factory
      */
     public function active(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'status' => Tenant::STATUS_ACTIVE,
             'activated_at' => now(),
         ]);
@@ -60,7 +60,7 @@ class TenantFactory extends Factory
      */
     public function suspended(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'status' => Tenant::STATUS_SUSPENDED,
         ]);
     }
@@ -70,7 +70,7 @@ class TenantFactory extends Factory
      */
     public function basicPlan(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'plan' => Tenant::PLAN_BASIC,
         ]);
     }
@@ -80,7 +80,7 @@ class TenantFactory extends Factory
      */
     public function professionalPlan(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'plan' => Tenant::PLAN_PROFESSIONAL,
         ]);
     }
@@ -90,7 +90,7 @@ class TenantFactory extends Factory
      */
     public function enterprisePlan(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'plan' => Tenant::PLAN_ENTERPRISE,
         ]);
     }
@@ -100,7 +100,7 @@ class TenantFactory extends Factory
      */
     public function trialExpired(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'trial_ends_at' => now()->subDays(1),
         ]);
     }

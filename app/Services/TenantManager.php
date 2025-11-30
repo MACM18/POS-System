@@ -221,7 +221,7 @@ class TenantManager
             'name' => $data['name'],
             'slug' => $uniqueSlug,
             'domain' => $data['domain'] ?? "{$uniqueSlug}.posapp.com",
-            'database' => $this->getDatabasePrefix() . $uniqueSlug,
+            'database' => $this->getDatabasePrefix().$uniqueSlug,
             'email' => $data['email'],
             'status' => Tenant::STATUS_PENDING,
             'plan' => $data['plan'] ?? Tenant::PLAN_FREE,
@@ -247,7 +247,7 @@ class TenantManager
         $counter = 1;
 
         while (Tenant::where('slug', $slug)->exists()) {
-            $slug = $originalSlug . '-' . $counter;
+            $slug = $originalSlug.'-'.$counter;
             $counter++;
         }
 
@@ -294,11 +294,11 @@ class TenantManager
     {
         $database = $this->sanitizeDatabaseName($database);
 
-        $result = DB::connection('pgsql')->select("
+        $result = DB::connection('pgsql')->select('
             SELECT 1 FROM pg_database WHERE datname = ?
-        ", [$database]);
+        ', [$database]);
 
-        return !empty($result);
+        return ! empty($result);
     }
 
     /**
@@ -310,6 +310,7 @@ class TenantManager
 
         try {
             $this->initialize($tenant);
+
             return $callback($tenant);
         } finally {
             if ($previousTenant) {

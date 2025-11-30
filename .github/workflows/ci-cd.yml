@@ -74,7 +74,7 @@ jobs:
           DB_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
 
       - name: Run tests
-        run: php artisan test --parallel --coverage-text
+        run: php artisan test --coverage-text
         env:
           DB_CONNECTION: pgsql
           DB_HOST: localhost

@@ -20,7 +20,7 @@ abstract class TestCase extends BaseTestCase
     {
         // Create a test tenant
         $this->tenant = Tenant::factory()->active()->create([
-            'database' => 'tenant_test_' . uniqid(),
+            'database' => 'tenant_test_'.uniqid(),
         ]);
 
         // Initialize tenant context

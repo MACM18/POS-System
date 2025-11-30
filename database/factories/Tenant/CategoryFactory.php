@@ -41,7 +41,7 @@ class CategoryFactory extends Factory
      */
     public function inactive(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'is_active' => false,
         ]);
     }
@@ -51,7 +51,7 @@ class CategoryFactory extends Factory
      */
     public function withParent(Category $parent): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'parent_id' => $parent->id,
         ]);
     }

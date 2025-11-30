@@ -52,7 +52,7 @@ class SaleFactory extends Factory
      */
     public function pending(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'status' => Sale::STATUS_PENDING,
             'completed_at' => null,
         ]);
@@ -63,7 +63,7 @@ class SaleFactory extends Factory
      */
     public function cancelled(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'status' => Sale::STATUS_CANCELLED,
         ]);
     }
@@ -73,7 +73,7 @@ class SaleFactory extends Factory
      */
     public function forCustomer(Customer $customer): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'customer_id' => $customer->id,
         ]);
     }
@@ -83,7 +83,7 @@ class SaleFactory extends Factory
      */
     public function byCashier(User $user): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'user_id' => $user->id,
         ]);
     }
@@ -93,7 +93,7 @@ class SaleFactory extends Factory
      */
     public function paymentMethod(string $method): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'payment_method' => $method,
         ]);
     }
@@ -105,6 +105,7 @@ class SaleFactory extends Factory
     {
         return $this->state(function (array $attributes) use ($amount, $type) {
             $total = $attributes['subtotal'] + $attributes['tax_amount'] - $amount;
+
             return [
                 'discount_amount' => $amount,
                 'discount_type' => $type,

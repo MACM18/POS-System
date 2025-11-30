@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Tenant\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -68,13 +67,13 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        if (! $user || ! Hash::check($request->password, $user->password)) {
             return response()->json([
                 'message' => 'Invalid credentials',
             ], 401);
         }
 
-        if (!$user->is_active) {
+        if (! $user->is_active) {
             return response()->json([
                 'message' => 'User account is disabled',
             ], 403);
@@ -150,7 +149,7 @@ class AuthController extends Controller
 
         $user = $request->user();
 
-        if (!Hash::check($request->current_password, $user->password)) {
+        if (! Hash::check($request->current_password, $user->password)) {
             return response()->json([
                 'message' => 'Current password is incorrect',
             ], 400);

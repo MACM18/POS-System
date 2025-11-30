@@ -21,8 +21,8 @@ class TenantController extends Controller
     public function index(Request $request): JsonResponse
     {
         $tenants = Tenant::query()
-            ->when($request->status, fn($q, $status) => $q->where('status', $status))
-            ->when($request->plan, fn($q, $plan) => $q->where('plan', $plan))
+            ->when($request->status, fn ($q, $status) => $q->where('status', $status))
+            ->when($request->plan, fn ($q, $plan) => $q->where('plan', $plan))
             ->orderBy('created_at', 'desc')
             ->paginate($request->per_page ?? 15);
 
@@ -71,7 +71,7 @@ class TenantController extends Controller
     {
         $tenant = Tenant::find($id);
 
-        if (!$tenant) {
+        if (! $tenant) {
             return response()->json([
                 'message' => 'Tenant not found',
             ], 404);
@@ -87,7 +87,7 @@ class TenantController extends Controller
     {
         $tenant = Tenant::find($id);
 
-        if (!$tenant) {
+        if (! $tenant) {
             return response()->json([
                 'message' => 'Tenant not found',
             ], 404);
@@ -95,8 +95,8 @@ class TenantController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'sometimes|string|max:255',
-            'email' => 'sometimes|email|unique:tenants,email,' . $id,
-            'domain' => 'sometimes|string|unique:tenants,domain,' . $id,
+            'email' => 'sometimes|email|unique:tenants,email,'.$id,
+            'domain' => 'sometimes|string|unique:tenants,domain,'.$id,
             'plan' => 'sometimes|in:free,basic,professional,enterprise',
             'status' => 'sometimes|in:active,inactive,suspended,pending',
             'settings' => 'sometimes|array',
@@ -124,7 +124,7 @@ class TenantController extends Controller
     {
         $tenant = Tenant::find($id);
 
-        if (!$tenant) {
+        if (! $tenant) {
             return response()->json([
                 'message' => 'Tenant not found',
             ], 404);
@@ -155,7 +155,7 @@ class TenantController extends Controller
     {
         $tenant = Tenant::find($id);
 
-        if (!$tenant) {
+        if (! $tenant) {
             return response()->json([
                 'message' => 'Tenant not found',
             ], 404);
@@ -176,7 +176,7 @@ class TenantController extends Controller
     {
         $tenant = Tenant::find($id);
 
-        if (!$tenant) {
+        if (! $tenant) {
             return response()->json([
                 'message' => 'Tenant not found',
             ], 404);

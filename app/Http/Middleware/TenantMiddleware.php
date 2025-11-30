@@ -26,14 +26,14 @@ class TenantMiddleware
     {
         $tenant = $this->resolveTenant($request);
 
-        if (!$tenant) {
+        if (! $tenant) {
             return response()->json([
                 'message' => 'Tenant not found.',
                 'error' => 'invalid_tenant',
             ], 404);
         }
 
-        if (!$tenant->isActive()) {
+        if (! $tenant->isActive()) {
             return response()->json([
                 'message' => 'Tenant account is not active.',
                 'error' => 'tenant_inactive',
@@ -110,7 +110,7 @@ class TenantMiddleware
     {
         $tenantId = $request->header('X-Tenant-ID');
 
-        if (!$tenantId) {
+        if (! $tenantId) {
             return null;
         }
 
@@ -124,7 +124,7 @@ class TenantMiddleware
     {
         $tenantSlug = $request->query('tenant');
 
-        if (!$tenantSlug) {
+        if (! $tenantSlug) {
             return null;
         }
 

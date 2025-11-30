@@ -16,9 +16,9 @@ class CategoryController extends Controller
     public function index(Request $request): JsonResponse
     {
         $query = Category::query()
-            ->when($request->boolean('roots_only'), fn($q) => $q->roots())
-            ->when($request->boolean('active_only'), fn($q) => $q->active())
-            ->when($request->parent_id, fn($q, $parentId) => $q->where('parent_id', $parentId))
+            ->when($request->boolean('roots_only'), fn ($q) => $q->roots())
+            ->when($request->boolean('active_only'), fn ($q) => $q->active())
+            ->when($request->parent_id, fn ($q, $parentId) => $q->where('parent_id', $parentId))
             ->with('children')
             ->ordered();
 
@@ -68,7 +68,7 @@ class CategoryController extends Controller
     {
         $category = Category::with('parent', 'children', 'products')->find($id);
 
-        if (!$category) {
+        if (! $category) {
             return response()->json([
                 'message' => 'Category not found',
             ], 404);
@@ -84,7 +84,7 @@ class CategoryController extends Controller
     {
         $category = Category::find($id);
 
-        if (!$category) {
+        if (! $category) {
             return response()->json([
                 'message' => 'Category not found',
             ], 404);
@@ -92,7 +92,7 @@ class CategoryController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'sometimes|string|max:255',
-            'slug' => 'sometimes|string|max:255|unique:tenant.categories,slug,' . $id,
+            'slug' => 'sometimes|string|max:255|unique:tenant.categories,slug,'.$id,
             'description' => 'nullable|string',
             'image' => 'nullable|string',
             'parent_id' => 'nullable|uuid|exists:tenant.categories,id',
@@ -129,7 +129,7 @@ class CategoryController extends Controller
     {
         $category = Category::find($id);
 
-        if (!$category) {
+        if (! $category) {
             return response()->json([
                 'message' => 'Category not found',
             ], 404);

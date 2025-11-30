@@ -40,15 +40,20 @@ class InventoryMovement extends TenantModel
      * Type constants.
      */
     public const TYPE_IN = 'in';
+
     public const TYPE_OUT = 'out';
+
     public const TYPE_ADJUSTMENT = 'adjustment';
 
     /**
      * Reference type constants.
      */
     public const REF_SALE = 'sale';
+
     public const REF_PURCHASE = 'purchase';
+
     public const REF_ADJUSTMENT = 'adjustment';
+
     public const REF_RETURN = 'return';
 
     /**

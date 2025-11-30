@@ -16,11 +16,11 @@ class ProductController extends Controller
     public function index(Request $request): JsonResponse
     {
         $query = Product::query()
-            ->when($request->search, fn($q, $search) => $q->search($search))
-            ->when($request->category_id, fn($q, $categoryId) => $q->where('category_id', $categoryId))
-            ->when($request->boolean('active_only'), fn($q) => $q->active())
-            ->when($request->boolean('low_stock'), fn($q) => $q->lowStock())
-            ->when($request->boolean('out_of_stock'), fn($q) => $q->outOfStock())
+            ->when($request->search, fn ($q, $search) => $q->search($search))
+            ->when($request->category_id, fn ($q, $categoryId) => $q->where('category_id', $categoryId))
+            ->when($request->boolean('active_only'), fn ($q) => $q->active())
+            ->when($request->boolean('low_stock'), fn ($q) => $q->lowStock())
+            ->when($request->boolean('out_of_stock'), fn ($q) => $q->outOfStock())
             ->with('category')
             ->orderBy($request->sort_by ?? 'name', $request->sort_dir ?? 'asc');
 
@@ -80,7 +80,7 @@ class ProductController extends Controller
     {
         $product = Product::with('category', 'inventoryMovements')->find($id);
 
-        if (!$product) {
+        if (! $product) {
             return response()->json([
                 'message' => 'Product not found',
             ], 404);
@@ -96,7 +96,7 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
 
-        if (!$product) {
+        if (! $product) {
             return response()->json([
                 'message' => 'Product not found',
             ], 404);
@@ -104,9 +104,9 @@ class ProductController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'sometimes|string|max:255',
-            'slug' => 'sometimes|string|max:255|unique:tenant.products,slug,' . $id,
-            'sku' => 'sometimes|string|max:100|unique:tenant.products,sku,' . $id,
-            'barcode' => 'nullable|string|max:100|unique:tenant.products,barcode,' . $id,
+            'slug' => 'sometimes|string|max:255|unique:tenant.products,slug,'.$id,
+            'sku' => 'sometimes|string|max:100|unique:tenant.products,sku,'.$id,
+            'barcode' => 'nullable|string|max:100|unique:tenant.products,barcode,'.$id,
             'description' => 'nullable|string',
             'cost_price' => 'nullable|numeric|min:0',
             'selling_price' => 'sometimes|numeric|min:0',
@@ -144,7 +144,7 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
 
-        if (!$product) {
+        if (! $product) {
             return response()->json([
                 'message' => 'Product not found',
             ], 404);
@@ -154,6 +154,7 @@ class ProductController extends Controller
         if ($product->saleItems()->exists()) {
             // Soft delete instead
             $product->delete();
+
             return response()->json([
                 'message' => 'Product archived successfully (has sales history)',
             ]);
@@ -174,7 +175,7 @@ class ProductController extends Controller
     {
         $product = Product::where('barcode', $barcode)->active()->first();
 
-        if (!$product) {
+        if (! $product) {
             return response()->json([
                 'message' => 'Product not found',
             ], 404);
@@ -190,7 +191,7 @@ class ProductController extends Controller
     {
         $product = Product::where('sku', $sku)->active()->first();
 
-        if (!$product) {
+        if (! $product) {
             return response()->json([
                 'message' => 'Product not found',
             ], 404);
@@ -206,7 +207,7 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
 
-        if (!$product) {
+        if (! $product) {
             return response()->json([
                 'message' => 'Product not found',
             ], 404);

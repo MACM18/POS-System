@@ -57,16 +57,22 @@ class Tenant extends Model
      * Status constants.
      */
     public const STATUS_ACTIVE = 'active';
+
     public const STATUS_INACTIVE = 'inactive';
+
     public const STATUS_SUSPENDED = 'suspended';
+
     public const STATUS_PENDING = 'pending';
 
     /**
      * Plan constants.
      */
     public const PLAN_FREE = 'free';
+
     public const PLAN_BASIC = 'basic';
+
     public const PLAN_PROFESSIONAL = 'professional';
+
     public const PLAN_ENTERPRISE = 'enterprise';
 
     /**
