@@ -1,0 +1,10 @@
+# Ignore PHP files - Laravel Pint handles PHP formatting
+*.php
+**/*.php
+
+# Vendor directory
+vendor/
+
+# Build outputs
+public/build/
+node_modules/
