@@ -7,16 +7,6 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [Unreleased]
-
-### Fixed - Test Suite Improvements
-
--   [x] Fixed PostgreSQL UUID validation error in `test_show_returns_404_for_non_existent_tenant` - now uses valid UUID format
--   [x] Skip `test_can_delete_tenant` (requires PostgreSQL superuser for database deprovisioning)
--   [x] Skip `test_can_create_tenant` - CREATE DATABASE cannot run inside RefreshDatabase transaction
--   [x] Skip `test_generates_unique_slug` - CREATE DATABASE cannot run inside RefreshDatabase transaction
--   [x] Fixed Pint `concat_space` style issue in `config/database.php` Redis prefix
-
 ### Planned Features
 
 -   [ ] Receipt generation API (PDF/thermal printer format)
