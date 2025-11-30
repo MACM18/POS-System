@@ -79,11 +79,17 @@ class TenantModelTest extends TestCase
 
     public function test_tenant_scopes(): void
     {
+        // Create tenants with specific statuses
         Tenant::factory()->count(3)->create(['status' => Tenant::STATUS_ACTIVE]);
         Tenant::factory()->count(2)->create(['status' => Tenant::STATUS_PENDING]);
-        Tenant::factory()->create(['slug' => 'test-company']);
 
-        $this->assertEquals(3, Tenant::active()->count());
+        // Create one more active tenant with specific slug
+        Tenant::factory()->create([
+            'status' => Tenant::STATUS_ACTIVE,
+            'slug' => 'test-company',
+        ]);
+
+        $this->assertEquals(4, Tenant::active()->count()); // 3 + 1 with slug
         $this->assertEquals(2, Tenant::pending()->count());
         $this->assertEquals(1, Tenant::bySlug('test-company')->count());
     }

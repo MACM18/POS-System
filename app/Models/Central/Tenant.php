@@ -17,11 +17,6 @@ class Tenant extends Model
     protected $table = 'tenants';
 
     /**
-     * The connection name for the model.
-     */
-    protected $connection = 'pgsql';
-
-    /**
      * The attributes that are mass assignable.
      */
     protected $fillable = [

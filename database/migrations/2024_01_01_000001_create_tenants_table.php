@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('domain')->unique();
             $table->string('database')->unique();
             $table->string('email')->unique();
-            $table->enum('status', ['active', 'inactive', 'suspended', 'pending'])->default('pending');
-            $table->enum('plan', ['free', 'basic', 'professional', 'enterprise'])->default('free');
+            $table->string('status')->default('pending'); // active, inactive, suspended, pending
+            $table->string('plan')->default('free'); // free, basic, professional, enterprise
             $table->json('settings')->nullable();
             $table->timestamp('trial_ends_at')->nullable();
             $table->timestamp('activated_at')->nullable();

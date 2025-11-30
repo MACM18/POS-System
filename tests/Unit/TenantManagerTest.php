@@ -57,6 +57,11 @@ class TenantManagerTest extends TestCase
 
     public function test_generates_unique_slug(): void
     {
+        // Skip this test if PostgreSQL is not available (requires actual DB creation)
+        if (config('database.default') !== 'pgsql') {
+            $this->markTestSkipped('Requires PostgreSQL for database provisioning');
+        }
+
         // Create first tenant
         $tenant1 = $this->tenantManager->createTenant([
             'name' => 'Test Company',

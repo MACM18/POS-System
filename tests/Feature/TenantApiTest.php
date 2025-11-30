@@ -22,6 +22,11 @@ class TenantApiTest extends TestCase
 
     public function test_can_create_tenant(): void
     {
+        // Skip this test if PostgreSQL is not available (requires actual DB creation)
+        if (config('database.default') !== 'pgsql') {
+            $this->markTestSkipped('Requires PostgreSQL for database provisioning');
+        }
+
         $response = $this->postJson('/api/tenants', [
             'name' => 'New Company',
             'email' => 'new@company.com',
