@@ -1,9 +1,11 @@
 name: CI/CD Pipeline
 
 on:
-  push:
-    branches: [develop, structuring]
+  # Run on PRs to main (this is the gate before merging)
   pull_request:
+    branches: [main]
+  # Run on direct pushes to main (after merge or hotfix)
+  push:
     branches: [main]
 
 env:
