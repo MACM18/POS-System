@@ -1,4 +1,4 @@
-FROM php:8.4-fpm-alpine
+FROM php:8.4-fpm
 
 # Coolify build args
 ARG COOLIFY_URL
