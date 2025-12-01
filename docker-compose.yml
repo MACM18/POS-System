@@ -12,7 +12,7 @@ services:
       - .:/var/www/html
       - ./storage:/var/www/html/storage
     ports:
-      - "${APP_PORT:-8000}:8000"
+      - "${APP_PORT:-8001}:8001"
     depends_on:
       postgres:
         condition: service_healthy
